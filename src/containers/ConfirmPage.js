@@ -1,4 +1,6 @@
 import React from 'react';
+import { Grid, Row, Label } from 'react-bootstrap';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class ConfirmPage extends React.Component {
   constructor(props) {
@@ -9,9 +11,21 @@ class ConfirmPage extends React.Component {
   }
   render() {
     return (
-      <div>Confirmation</div>
+      <div>
+        { this.props.items && this.props.items.length > 0 ?
+        <Grid>
+          <Row>Confirmation for the following items:</Row>
+          <Row>
+            { this.props.items.map((item, index) =>
+              <Label key={item+index} bsStyle="success">{item}</Label>
+            )}
+          </Row>
+        </Grid>
+        : <Redirect to={'order'}/>
+      }
+      </div>
     )
   }
 }
 
-export default ConfirmPage
+export default withRouter(ConfirmPage);
